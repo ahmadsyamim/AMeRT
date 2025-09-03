@@ -1,6 +1,16 @@
 <?php
 include('config.php');
 
+if (isset($_GET['logout'])) {
+    // Unset all session variables
+    $_SESSION = array();
+    // Destroy the session
+    session_destroy();
+    // Redirect to clear the logout parameter from the URL
+    header('Location: login.php');
+    exit;
+}
+
 // Redirect if already logged in
 if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) 
 {
@@ -81,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login']))
                 </div>
             <?php endif; ?>
             
-            <form method="POST" class="space-y-6">
+            <form method="POST" class="space-y-6" action="login.php">
                 <div>
                     <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
                     <input type="text" id="username" name="username" class="w-full p-3 border border-gray-300 rounded-lg" required>
